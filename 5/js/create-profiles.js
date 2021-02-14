@@ -1,4 +1,4 @@
-import {generateNumber, getRandomElementNoRepeat, getRandomElement, randomPositiveNumber, getNoRepeatList} from './utils.js';
+import {generateNumber, getRandomElementNoRepeat, getRandomElement, getNoRepeatList} from './utils.js';
 
 import {
   MIN_COORDINATE_X,
@@ -26,13 +26,13 @@ let createProfile = () => {
 
       address: generateNumber(MIN_COORDINATE_X, MAX_COORDINATE_X, NUMBERS_AFTER_POINT) + ', ' + generateNumber(MIN_COORDINATE_Y, MAX_COORDINATE_Y, NUMBERS_AFTER_POINT), //строка — адрес предложения. Для простоты пусть пока составляется из географических координат по маске {{location.x}}, {{location.y}}.
 
-      price: randomPositiveNumber(), //число — стоимость. Любое положительное число.
+      price: generateNumber(1000, 5000), //число — стоимость. Любое положительное число.
 
       type: getRandomElement(houseTypes), //строка — одно из четырёх фиксированных значений: palace, flat, house или bungalow.
 
-      rooms: randomPositiveNumber(), //число — количество комнат. Любое положительное число.
+      rooms: generateNumber(1, 10), //число — количество комнат. Любое положительное число.
 
-      guests:  randomPositiveNumber(), //число — количество гостей, которое можно разместить. Любое положительное число.
+      guests:  generateNumber(1, 10), //число — количество гостей, которое можно разместить. Любое положительное число.
 
       checkin: getRandomElement(times), //строка — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00.
 
