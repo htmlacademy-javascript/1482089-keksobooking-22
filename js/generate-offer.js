@@ -35,7 +35,16 @@ let generateOffer = (profile) => {
   offerAddress.textContent = profile.offer.address; // адрес
   offerPrice.textContent = profile.offer.price + ' ₽/ночь'; // цена
   offerType.textContent = checkTypeOffer(profile); // тип жилья
-  offerRoomsForGuest.textContent = profile.offer.rooms + ' комнаты для ' + profile.offer.guests + ' гостей'; // количество гостей и комнат
+
+  // Корректные слова в зависимости от чисел
+  let roomsForText = ' комната для '
+  let guest = ' гостя'
+
+  if (profile.offer.rooms > 1) {roomsForText = ' комнаты для '}
+  if (profile.offer.rooms > 4) {roomsForText = ' комнат для '}
+  if (profile.offer.guests > 1) {guest = ' гостей'}
+
+  offerRoomsForGuest.textContent = profile.offer.rooms + roomsForText + profile.offer.guests + guest; // количество гостей и комнат
   offerTimes.textContent = 'Заезд после ' + profile.offer.checkin + ' выезд до ' + profile.offer.checkout; // Время заезда и выезда
 
   // Сравнивает класс элементов списка с сгенерируем массивом преимуществ и удаляет лишние
