@@ -1,6 +1,18 @@
 import {generateNumber, getRandomElementNoRepeat, getRandomElement, randomPositiveNumber, getNoRepeatList} from './utils.js';
 
-import {MIN_COORDINATE_X, MAX_COORDINATE_X, MIN_COORDINATE_Y, MAX_COORDINATE_Y, NUMBERS_AFTER_POINT, photosLinks, houseTypes, times, featuresArr, photosArr} from './constants-data.js';
+import {
+  MIN_COORDINATE_X,
+  MAX_COORDINATE_X,
+  MIN_COORDINATE_Y,
+  MAX_COORDINATE_Y,
+  NUMBERS_AFTER_POINT,
+  photosLinks,
+  houseTypes,
+  times,
+  featuresArr,
+  photosArr,
+  NUMBER_PROFILES
+} from './constants-data.js';
 
 
 let createProfile = () => {
@@ -40,4 +52,14 @@ let createProfile = () => {
   }
 }
 
-export {createProfile};
+let createProfilesArray = () => {
+  let profiles = [];
+
+  for (let i = 0; i <= NUMBER_PROFILES - 1; i++) {
+    profiles[i] = createProfile();
+  }
+
+  return profiles
+}
+
+export {createProfilesArray};
