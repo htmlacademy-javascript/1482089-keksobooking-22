@@ -1,57 +1,39 @@
+import {times, roomsAndCapaTokyoMap} from './constants-data.js'
+
+let typesOffer = Object.keys(roomsAndCapaTokyoMap);
+let minPricesOfTypesOffer = Object.values(roomsAndCapaTokyoMap);
+
 let form = document.querySelector('.ad-form');
 let inputTypeOffer = form.querySelector('#type');
 let inputPrice = form.querySelector('#price');
-inputPrice.placeholder = 1000;
+inputPrice.placeholder = minPricesOfTypesOffer[1];
 
 inputTypeOffer.addEventListener('change', () => {
-  if (inputTypeOffer.value === 'flat') {inputPrice.placeholder = 1000}
-  if (inputTypeOffer.value === 'bungalow') {inputPrice.placeholder = 0}
-  if (inputTypeOffer.value === 'house') {inputPrice.placeholder = 5000}
-  if (inputTypeOffer.value === 'palace') {inputPrice.placeholder = 10000}
+  for (let i = 0; i < typesOffer.length; i++) {
+    if (inputTypeOffer.value === typesOffer[i]) {inputPrice.placeholder = minPricesOfTypesOffer[i]}
+  }
 })
 
 form.addEventListener('submit', (evt) => {
-  if (inputTypeOffer.value === 'flat') {
-    if(inputPrice.value < 1000) {
+  for (let i = 0; i < typesOffer.length; i++) {
+    if (inputTypeOffer.value === typesOffer[i] && inputPrice.value < minPricesOfTypesOffer[i]) {
       evt.preventDefault();
-      alert('некорректная цена для квартиры')
-    }
-  }
-
-  if (inputTypeOffer.value === 'bungalow') {
-    if(inputPrice.value < 0) {
-      evt.preventDefault();
-      alert('некорректная цена для бунгало')
-    }
-  }
-
-  if (inputTypeOffer.value === 'house') {
-    if(inputPrice.value < 5000) {
-      evt.preventDefault();
-      alert('некорректная цена для дома')
-    }
-  }
-
-  if (inputTypeOffer.value === 'palace') {
-    if(inputPrice.value < 10000) {
-      evt.preventDefault();
-      alert('некорректная цена для дворца')
+      alert('некорректная цена')
     }
   }
 });
-
 
 let inputTimeIn = form.querySelector('#timein');
 let inputTimeOut = form.querySelector('#timeout');
 
 inputTimeIn.addEventListener('change', () => {
-  if (inputTimeIn.value === '12:00') {inputTimeOut.value = '12:00'}
-  if (inputTimeIn.value === '13:00') {inputTimeOut.value = '13:00'}
-  if (inputTimeIn.value === '14:00') {inputTimeOut.value = '14:00'}
+  for (let i = 0; i < times.length; i++) {
+    if (inputTimeIn.value === times[i]) {inputTimeOut.value = times[i]}
+  }
 })
 
 inputTimeOut.addEventListener('change', () => {
-  if (inputTimeOut.value === '12:00') {inputTimeIn.value = '12:00'}
-  if (inputTimeOut.value === '13:00') {inputTimeIn.value = '13:00'}
-  if (inputTimeOut.value === '14:00') {inputTimeIn.value = '14:00'}
+  for (let i = 0; i < times.length; i++) {
+    if (inputTimeOut.value === times[i]) {inputTimeIn.value = times[i]}
+  }
 })
