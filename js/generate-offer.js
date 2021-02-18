@@ -1,9 +1,5 @@
-import {createProfilesArray} from './create-profiles.js';
-
-let profiles = createProfilesArray();
-
 let offerTemplate = document.querySelector('#card').content.querySelector('.popup');
-let container = document.querySelector('.map__canvas');
+
 
 // Функция для определения типа жилья и перевода в читаемое значения
 let checkTypeOffer = (obj) => {
@@ -47,8 +43,7 @@ let generateOffer = (profile) => {
   offerRoomsForGuest.textContent = profile.offer.rooms + roomsForText + profile.offer.guests + guest; // количество гостей и комнат
   offerTimes.textContent = 'Заезд после ' + profile.offer.checkin + ' выезд до ' + profile.offer.checkout; // Время заезда и выезда
 
-  // Сравнивает класс элементов списка с сгенерируем массивом преимуществ и удаляет лишние
-  for (let i = 0; i < featuresItems.length; i++) {
+  for (let i = featuresItems.length - 1; i >= 0; i--) {
     let featureName = profile.offer.features[i];
     let className = 'popup__feature--' + featureName;
     if (!featuresItems[i].classList.contains(className)) {featuresItems[i].remove()}
@@ -71,10 +66,7 @@ let generateOffer = (profile) => {
 
   if (profile.author.avatar === 'img/avatars/user0undefined.png') {offerAvatar.remove()} // Удаляем аватар, если нет ссылки на фотографию
 
-  container.appendChild(newOffer);
+  return newOffer
 }
 
-// for (let k = 0; k < profiles.length; k++) {
-//   generateOffer(profiles[k]);
-// }
-generateOffer(profiles[0]);
+export {generateOffer};

@@ -5,6 +5,12 @@ const MAX_COORDINATE_Y = 139.80000;
 const NUMBERS_AFTER_POINT = 5;
 const NUMBER_PROFILES = 10;
 
+const markerWidth = 60;
+const markerHeight = 60;
+const tokyoLat = 35.683377;
+const tokyoLng = 139.754519;
+const mapScale = 12;
+
 let photosLinks = [1, 2, 3, 4, 5, 6, 7, 8];
 let houseTypes = ['palace', 'flat', 'house', 'bungalow'];
 let times = ['12:00', '13:00', '14:00'];
@@ -24,5 +30,10 @@ export {
   times,
   featuresArr,
   photosArr,
-  roomsAndCapaTokyoMap
+  roomsAndCapaTokyoMap,
+  markerWidth,
+  markerHeight,
+  tokyoLat,
+  tokyoLng,
+  mapScale
 }

@@ -14,8 +14,18 @@ import {
   NUMBER_PROFILES
 } from './constants-data.js';
 
+let getCoordinateX = () => {
+  return generateNumber(MIN_COORDINATE_X, MAX_COORDINATE_X, NUMBERS_AFTER_POINT)
+}
+
+let getCoordinateY = () => {
+  return generateNumber(MIN_COORDINATE_Y, MAX_COORDINATE_Y, NUMBERS_AFTER_POINT)
+}
 
 let createProfile = () => {
+  let coordinateX = getCoordinateX();
+  let coordinateY = getCoordinateY();
+
   return {
     author: {
       avatar: 'img/avatars/user' + '0' + getRandomElementNoRepeat(photosLinks) + '.png', //строка — адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} — это число от 1 до 8 с ведущим нулём. Например, 01, 02 и т. д. Адреса изображений не повторяются.
@@ -24,7 +34,7 @@ let createProfile = () => {
     offer: {
       title: 'Объявление об аренде',
 
-      address: generateNumber(MIN_COORDINATE_X, MAX_COORDINATE_X, NUMBERS_AFTER_POINT) + ', ' + generateNumber(MIN_COORDINATE_Y, MAX_COORDINATE_Y, NUMBERS_AFTER_POINT), //строка — адрес предложения. Для простоты пусть пока составляется из географических координат по маске {{location.x}}, {{location.y}}.
+      address: coordinateX + ', ' + coordinateY, //строка — адрес предложения. Для простоты пусть пока составляется из географических координат по маске {{location.x}}, {{location.y}}.
 
       price: generateNumber(1000, 5000), //число — стоимость. Любое положительное число.
 
@@ -46,8 +56,8 @@ let createProfile = () => {
     },
 
     location: {
-      x: generateNumber(MIN_COORDINATE_X, MAX_COORDINATE_X, NUMBERS_AFTER_POINT), //число с плавающей точкой — широта, случайное значение от 35.65000 до 35.70000
-      y: generateNumber(MIN_COORDINATE_Y, MAX_COORDINATE_Y, NUMBERS_AFTER_POINT), //число с плавающей точкой — долгота, случайное значение от 139.70000 до 139.80000
+      x: coordinateX, //число с плавающей точкой — широта, случайное значение от 35.65000 до 35.70000
+      y: coordinateY, //число с плавающей точкой — долгота, случайное значение от 139.70000 до 139.80000
     },
   }
 }
