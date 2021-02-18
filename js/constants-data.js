@@ -11,6 +11,10 @@ const tokyoLat = 35.683377;
 const tokyoLng = 139.754519;
 const mapScale = 12;
 
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+const MAX_PRICE = 1000000;
+
 let photosLinks = [1, 2, 3, 4, 5, 6, 7, 8];
 let houseTypes = ['palace', 'flat', 'house', 'bungalow'];
 let times = ['12:00', '13:00', '14:00'];
@@ -35,5 +39,8 @@ export {
   markerHeight,
   tokyoLat,
   tokyoLng,
-  mapScale
+  mapScale,
+  MIN_TITLE_LENGTH,
+  MAX_TITLE_LENGTH,
+  MAX_PRICE
 }
