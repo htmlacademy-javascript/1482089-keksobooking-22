@@ -40,6 +40,7 @@ let deactivateForm = (isDeactivate) => {
 
 deactivateForm(true)
 
+// eslint-disable-next-line no-undef
 let map = L.map(mapContainer)
   .on('load', () => {
     deactivateForm(false)
@@ -50,19 +51,21 @@ let map = L.map(mapContainer)
       lng: tokyoLng,
     }, mapScale);
 
+// eslint-disable-next-line no-undef
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
-
+// eslint-disable-next-line no-undef
 let myIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
+  iconUrl: 'img/main-pin.svg',
   iconSize: [markerWidth, markerHeight],
   iconAnchor: [markerWidth/2 , markerHeight],
 });
 
+// eslint-disable-next-line no-undef
 let marker = L.marker(
   {
     lat:  tokyoLat,
@@ -82,15 +85,16 @@ addressInput.readOnly = true;
 addressInput.value = `${coordinateLat}, ${coordinateLng}`
 
 
-marker.on('moveend', (evt) => {
+marker.on('move', (evt) => {
   let newCoordinates = evt.target.getLatLng();
   let newCoordinateLat = Number(newCoordinates.lat.toFixed(5));
   let newCoordinateLng = Number(newCoordinates.lng.toFixed(5));
   addressInput.value = `${newCoordinateLat}, ${newCoordinateLng}`
 })
 
+// eslint-disable-next-line no-undef
 let profileIcon = L.icon({
-  iconUrl: '../img/pin.svg',
+  iconUrl: 'img/pin.svg',
   iconSize: [markerWidth, markerHeight],
   iconAnchor: [markerWidth/2 , markerHeight],
 });
@@ -98,6 +102,7 @@ let profileIcon = L.icon({
 createProfilesArray().forEach((profile) => {
   let lat = profile.location.x;
   let lng = profile.location.y;
+  // eslint-disable-next-line no-undef
   let profileMarker = L.marker({
     lat,
     lng,

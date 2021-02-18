@@ -5,8 +5,8 @@ const MAX_COORDINATE_Y = 139.80000;
 const NUMBERS_AFTER_POINT = 5;
 const NUMBER_PROFILES = 10;
 
-const markerWidth = 52;
-const markerHeight = 52;
+const markerWidth = 60;
+const markerHeight = 60;
 const tokyoLat = 35.683377;
 const tokyoLng = 139.754519;
 const mapScale = 12;
