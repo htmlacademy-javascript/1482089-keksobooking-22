@@ -7,6 +7,10 @@ let form = document.querySelector('.ad-form');
 let inputTypeOffer = form.querySelector('#type');
 let inputPrice = form.querySelector('#price');
 let inputOfferTitle = form.querySelector('#title');
+let roomNumber = form.querySelector('#room_number')
+let guestSelect = form.querySelector('#capacity')
+let capacity = guestSelect.querySelectorAll('option');
+
 
 inputPrice.placeholder = minPricesOfTypesOffer[1];
 inputPrice.min = minPricesOfTypesOffer[1];
@@ -63,5 +67,41 @@ inputTimeIn.addEventListener('change', () => {
 inputTimeOut.addEventListener('change', () => {
   for (let i = 0; i < times.length; i++) {
     if (inputTimeOut.value === times[i]) {inputTimeIn.value = times[i]}
+  }
+})
+
+capacity[2].selected = true;
+capacity[2].selected = true;
+capacity[0].disabled = true;
+capacity[1].disabled = true;
+capacity[3].disabled = true;
+
+roomNumber.addEventListener('change', () => {
+  if (roomNumber.value === '1') {
+    capacity[2].selected = true;
+    capacity[0].disabled = true;
+    capacity[1].disabled = true;
+    capacity[3].disabled = true;
+  }
+  if (roomNumber.value === '2') {
+    capacity[1].selected = true;
+    capacity[0].disabled = true;
+    capacity[1].disabled = false;
+    capacity[2].disabled = false;
+    capacity[3].disabled = true;
+  }
+  if (roomNumber.value === '3') {
+    capacity[0].selected = true;
+    capacity[0].disabled = false;
+    capacity[1].disabled = false;
+    capacity[2].disabled = false;
+    capacity[3].disabled = true;
+  }
+  if (roomNumber.value === '100') {
+    capacity[3].selected = true;
+    capacity[0].disabled = true;
+    capacity[1].disabled = true;
+    capacity[2].disabled = true;
+    capacity[3].disabled = false;
   }
 })
