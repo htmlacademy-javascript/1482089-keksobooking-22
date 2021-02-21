@@ -1,4 +1,4 @@
-import {times, roomsAndCapaTokyoMap, MIN_TITLE_LENGTH} from './constants-data.js'
+import {times, roomsAndCapaTokyoMap, MIN_TITLE_LENGTH, MAX_PRICE, ONE_ROOM, TWO_ROOMS, THREE_ROOMS, MANY_ROOMS, NOT_FOR_GUEST, FOR_ONE_GUEST, FOR_TWO_GUEST, FOR_THREE_GUEST} from './constants-data.js'
 
 let typesOffer = Object.keys(roomsAndCapaTokyoMap);
 let minPricesOfTypesOffer = Object.values(roomsAndCapaTokyoMap);
@@ -7,10 +7,6 @@ let form = document.querySelector('.ad-form');
 let inputTypeOffer = form.querySelector('#type');
 let inputPrice = form.querySelector('#price');
 let inputOfferTitle = form.querySelector('#title');
-let roomNumber = form.querySelector('#room_number')
-let guestSelect = form.querySelector('#capacity')
-let capacity = guestSelect.querySelectorAll('option');
-
 
 inputPrice.placeholder = minPricesOfTypesOffer[1];
 inputPrice.min = minPricesOfTypesOffer[1];
@@ -24,17 +20,16 @@ inputTypeOffer.addEventListener('change', () => {
   }
 })
 
-// Не знаю как лучше поступить: оставить функцию(ниже) добавить атрибут max через JS или просто в HTML добавить max="1000000"
+// Кастомная валидация максимальной цены
+inputPrice.addEventListener('input', () => {
+  if (inputPrice.value > MAX_PRICE) {
+    inputPrice.setCustomValidity('Максимальная цена 1.000.000')
+  } else {
+    inputPrice.setCustomValidity('')
+  }
 
-// inputPrice.addEventListener('input', () => {
-//   if (inputPrice.value > 1000000) {
-//     inputPrice.setCustomValidity('Максимальная цена 1.000.000')
-//   } else {
-//     inputPrice.setCustomValidity('')
-//   }
-//
-//   inputPrice.reportValidity();
-// })
+  inputPrice.reportValidity();
+})
 
 form.addEventListener('submit', (evt) => {
   for (let i = 0; i < typesOffer.length; i++) {
@@ -70,38 +65,48 @@ inputTimeOut.addEventListener('change', () => {
   }
 })
 
-capacity[2].selected = true;
-capacity[2].selected = true;
-capacity[0].disabled = true;
-capacity[1].disabled = true;
-capacity[3].disabled = true;
+let roomNumber = form.querySelector('#room_number')
+let guestSelect = form.querySelector('#capacity')
+let capacityOptions = guestSelect.querySelectorAll('option');
 
-roomNumber.addEventListener('change', () => {
-  if (roomNumber.value === '1') {
-    capacity[2].selected = true;
-    capacity[0].disabled = true;
-    capacity[1].disabled = true;
-    capacity[3].disabled = true;
+// Функция отключающая переданные option
+let setDisabledValue = (elements, whichOptionsToDisable) => {
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].disabled = false;
+    let valuePosition = whichOptionsToDisable.indexOf(elements[i].value);
+
+    if (valuePosition > -1) {
+      elements[i].disabled = true;
+    }
   }
-  if (roomNumber.value === '2') {
-    capacity[1].selected = true;
-    capacity[0].disabled = true;
-    capacity[1].disabled = false;
-    capacity[2].disabled = false;
-    capacity[3].disabled = true;
+};
+
+// Функция отключает поля гостей, в зависимости от выбранного поля кол-ва комнат
+let calculateRoomsAndCapacity = () => {
+  let roomsInputValue = roomNumber.value;
+
+  switch (roomsInputValue) {
+    case ONE_ROOM: // Зависимость от выбора кол-ва комнат
+      setDisabledValue(capacityOptions, [NOT_FOR_GUEST, FOR_TWO_GUEST, FOR_THREE_GUEST]); // Массив строк значений option поля кол-ва гостей позволяет отключить ненужные значения
+      capacityOptions[2].selected = true;
+      break;
+    case TWO_ROOMS:
+      setDisabledValue(capacityOptions, [NOT_FOR_GUEST, FOR_THREE_GUEST]);
+      capacityOptions[1].selected = true;
+      break;
+    case THREE_ROOMS:
+      setDisabledValue(capacityOptions, [NOT_FOR_GUEST]);
+      capacityOptions[0].selected = true;
+      break;
+    case MANY_ROOMS:
+      setDisabledValue(capacityOptions, [FOR_ONE_GUEST, FOR_TWO_GUEST, FOR_THREE_GUEST]);
+      capacityOptions[3].selected = true;
+      break;
   }
-  if (roomNumber.value === '3') {
-    capacity[0].selected = true;
-    capacity[0].disabled = false;
-    capacity[1].disabled = false;
-    capacity[2].disabled = false;
-    capacity[3].disabled = true;
-  }
-  if (roomNumber.value === '100') {
-    capacity[3].selected = true;
-    capacity[0].disabled = true;
-    capacity[1].disabled = true;
-    capacity[2].disabled = true;
-    capacity[3].disabled = false;
-  }
-})
+};
+
+let roomsInputChangeHandler = () => {
+  calculateRoomsAndCapacity();
+};
+
+roomNumber.addEventListener('change', roomsInputChangeHandler);
