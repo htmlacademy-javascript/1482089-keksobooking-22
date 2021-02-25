@@ -1,4 +1,17 @@
-import {times, roomsAndCapaTokyoMap, MIN_TITLE_LENGTH, MAX_PRICE, ONE_ROOM, TWO_ROOMS, THREE_ROOMS, MANY_ROOMS, NOT_FOR_GUEST, FOR_ONE_GUEST, FOR_TWO_GUEST, FOR_THREE_GUEST} from './constants-data.js'
+import {
+  times,
+  roomsAndCapaTokyoMap,
+  MIN_TITLE_LENGTH,
+  MAX_PRICE,
+  ONE_ROOM,
+  TWO_ROOMS,
+  THREE_ROOMS,
+  MANY_ROOMS,
+  NOT_FOR_GUEST,
+  FOR_ONE_GUEST,
+  FOR_TWO_GUEST,
+  FOR_THREE_GUEST
+} from './constants-data.js'
 
 let typesOffer = Object.keys(roomsAndCapaTokyoMap);
 let minPricesOfTypesOffer = Object.values(roomsAndCapaTokyoMap);
@@ -110,3 +123,19 @@ let roomsInputChangeHandler = () => {
 };
 
 roomNumber.addEventListener('change', roomsInputChangeHandler);
+
+import {postData} from './data.js';
+import {onSuccess, onError, clearForm} from './utils.js';
+
+form.addEventListener('submit',(evt) => {
+  evt.preventDefault();
+
+  let fromData = new FormData(evt.target);
+
+  postData(fromData)
+    .then(onSuccess)
+    .catch(onError)
+});
+
+let resetButton = form.querySelector('.ad-form__reset');
+resetButton.addEventListener('click', clearForm)

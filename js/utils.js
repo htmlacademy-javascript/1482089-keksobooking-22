@@ -1,3 +1,6 @@
+import {marker} from './map.js';
+import {tokyoLat, tokyoLng} from './constants-data.js';
+
 let generateNumber = function (min, max, point) {
   if (max < 0 || min < 0 || point < 0 || max < min) {
     return 'INVALID DATA'
@@ -27,7 +30,7 @@ let getNoRepeatList = (array) => {
   return array.slice(0, generateNumber(0,array.length))
 }
 
-let openErrorDataPopup = () => {
+function openErrorDataPopup () {
   let errorPopup = document.createElement('div');
   errorPopup.style.height = '50px';
   errorPopup.style.textAlign = 'center';
@@ -47,4 +50,52 @@ let openErrorDataPopup = () => {
   }, 3000)
 }
 
-export {generateNumber, getRandomElementNoRepeat, getRandomElement, randomPositiveNumber, getNoRepeatList, openErrorDataPopup};
+let closePopups = (element) => {
+  let closeButton = element.querySelector('button');
+
+  if (element.contains(closeButton)) {
+    closeButton.addEventListener('click', () => {
+      element.remove();
+    })
+  }
+
+  element.addEventListener('click', () => {
+    element.remove();
+  })
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27) {
+      element.remove();
+    }
+  })
+}
+
+let clonePopup = (idSelector, classSelector) => {
+  let template = document.querySelector(idSelector).content.querySelector(classSelector);
+  let popup = template.cloneNode(true);
+  let container = document.querySelector('main')
+  let mapContainer = container.querySelector('.map');
+  mapContainer.style.zIndex = '1';
+  return container.appendChild(popup);
+}
+
+let clearForm = () => {
+  let filters = document.querySelector('.map__filters');
+  let form = document.querySelector('.ad-form')
+  form.reset();
+  filters.reset();
+  marker.setLatLng([tokyoLat, tokyoLng]);
+}
+
+let onSuccess = () => {
+  clearForm();
+  let newSuccessPopup = clonePopup('#success', '.success');
+  closePopups(newSuccessPopup);
+}
+
+let onError = () => {
+  let errorPopup = clonePopup('#error', '.error')
+  closePopups(errorPopup)
+}
+
+export {generateNumber, getRandomElementNoRepeat, getRandomElement, randomPositiveNumber, getNoRepeatList, openErrorDataPopup, onSuccess, onError, clearForm};

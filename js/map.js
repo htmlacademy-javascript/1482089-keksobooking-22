@@ -1,6 +1,6 @@
 import {markerWidth, markerHeight, tokyoLat, tokyoLng, mapScale} from './constants-data.js'
 import {generateOffer} from './generate-offer.js';
-import {getData} from './data.js'
+import {getData} from './data.js';
 
 
 let adForm = document.querySelector('.ad-form');
@@ -77,6 +77,8 @@ let marker = L.marker(
   },
 ).addTo(map);
 
+export {marker, map}
+
 let coordinates = marker.getLatLng();
 let coordinateLat = Number(coordinates.lat.toFixed(5));
 let coordinateLng = Number(coordinates.lng.toFixed(5));
@@ -89,7 +91,7 @@ marker.on('move', (evt) => {
   let newCoordinates = evt.target.getLatLng();
   let newCoordinateLat = Number(newCoordinates.lat.toFixed(5));
   let newCoordinateLng = Number(newCoordinates.lng.toFixed(5));
-  addressInput.value = `${newCoordinateLat}, ${newCoordinateLng}`
+  addressInput.value = `${newCoordinateLat}, ${newCoordinateLng}`;
 })
 
 // eslint-disable-next-line no-undef
