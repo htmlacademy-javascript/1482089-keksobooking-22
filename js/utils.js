@@ -81,9 +81,11 @@ let clonePopup = (idSelector, classSelector) => {
 
 let clearForm = () => {
   let filters = document.querySelector('.map__filters');
-  let form = document.querySelector('.ad-form')
+  let form = document.querySelector('.ad-form');
+  let address = form.querySelector('#address');
   form.reset();
   filters.reset();
+  address.value = `${tokyoLat}, ${tokyoLng}`;
   marker.setLatLng([tokyoLat, tokyoLng]);
 }
 
