@@ -138,4 +138,7 @@ form.addEventListener('submit',(evt) => {
 });
 
 let resetButton = form.querySelector('.ad-form__reset');
-resetButton.addEventListener('click', clearForm)
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  clearForm();
+})
