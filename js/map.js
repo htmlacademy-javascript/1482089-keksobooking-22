@@ -106,6 +106,7 @@ let priceInput = document.querySelector('#housing-price');
 let roomsInput = document.querySelector('#housing-rooms');
 let guestInput = document.querySelector('#housing-guests');
 let featuresCheckList = document.querySelector('#housing-features');
+// let features = featuresCheckList.querySelectorAll('input');
 
 let setTypes = (cb) => {
   typeInput.addEventListener('change', () => {
@@ -139,13 +140,15 @@ let setGuest = (cb) => {
   })
 }
 
-let setFeatures = () => {
-  featuresCheckList.addEventListener('click', (evt) => {
-    if (evt.target.checked === true) {console.log(evt.target.value)}
 
-  } )
+let setFeatures = (cb) => {
+  featuresCheckList.addEventListener('click', () => {
+    let markers = document.querySelectorAll('.leaflet-marker-icon:not(:first-of-type)')
+    markers.forEach((marker) => {marker.remove()})
+    cb()
+  })
 }
-setFeatures()
+
 let filterTypes = (item) => {
   let type = typeInput.value;
   let same = false;
@@ -201,7 +204,6 @@ let filterRooms = (item) => {
 
 let filterGuest = (item) => {
   let guestNumber = guestInput.value;
-  console.log(guestNumber)
   let same = false;
 
   if (item.offer.guests >= guestNumber) {
@@ -218,14 +220,37 @@ let filterGuest = (item) => {
 let addOffersToMap = (array) => {
 
   let newArray = array
+    .slice()
     .filter(filterTypes)
     .filter(filterPrice)
     .filter(filterRooms)
     .filter(filterGuest)
-  console.log(newArray)
+    .filter((item) => {
+      let features = featuresCheckList.querySelectorAll('input');
+      let offerFeatures = item.offer.features;
+
+      for (let i = 0; i < features.length; i++) {
+        if (features[i].checked) {
+          if (offerFeatures.some((element) => {return element === features[i].value})) {
+            return true;
+          }
+        }
+      }
+
+
+      // Может быть собрать новый массив только с инпутами у которых есть checked?
+
+      // let checkedFeatures = [];
+      //
+      // for (let i = 0; i < features.length; i++) {
+      //   if (features[i].checked) {
+      //     checkedFeatures[i] = features[i].value;
+      //   }
+      // }
+    })
+
 
   newArray
-    .slice()
     .slice(0, 10)
     .forEach((profile) => {
       let lat = profile.location.lat;
@@ -245,13 +270,12 @@ let addOffersToMap = (array) => {
 }
 
 getData((profiles) => {
-  console.log(profiles)
   addOffersToMap(profiles)
   setTypes(() => {addOffersToMap(profiles)})
   setPrice(() => {addOffersToMap(profiles)});
   setRooms(() => {addOffersToMap(profiles)});
   setGuest(() => {addOffersToMap(profiles)});
-
+  setFeatures(() => {addOffersToMap(profiles)});
 });
 
 export{addOffersToMap}
