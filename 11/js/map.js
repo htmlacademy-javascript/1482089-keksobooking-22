@@ -1,7 +1,7 @@
 import {markerWidth, markerHeight, tokyoLat, tokyoLng, mapScale} from './constants-data.js'
 import {generateOffer} from './generate-offer.js';
+import {filterTypes, filterPrice, filterRooms, filterGuest, filterFeatures, setListener} from './filters.js'
 import {getData} from './data.js';
-
 
 let adForm = document.querySelector('.ad-form');
 let adFieldsets = adForm.querySelectorAll('fieldset');
@@ -106,116 +106,6 @@ let priceInput = document.querySelector('#housing-price');
 let roomsInput = document.querySelector('#housing-rooms');
 let guestInput = document.querySelector('#housing-guests');
 let featuresCheckList = document.querySelector('#housing-features');
-// let features = featuresCheckList.querySelectorAll('input');
-
-let setTypes = (cb) => {
-  typeInput.addEventListener('change', () => {
-    let markers = document.querySelectorAll('.leaflet-marker-icon:not(:first-of-type)')
-    markers.forEach((marker) => {marker.remove()})
-    cb()
-  })
-}
-
-let setPrice = (cb) => {
-  priceInput.addEventListener('change', () => {
-    let markers = document.querySelectorAll('.leaflet-marker-icon:not(:first-of-type)')
-    markers.forEach((marker) => {marker.remove()})
-    cb()
-  })
-}
-
-let setRooms = (cb) => {
-  roomsInput.addEventListener('change', () => {
-    let markers = document.querySelectorAll('.leaflet-marker-icon:not(:first-of-type)')
-    markers.forEach((marker) => {marker.remove()})
-    cb()
-  })
-}
-
-let setGuest = (cb) => {
-  guestInput.addEventListener('change', () => {
-    let markers = document.querySelectorAll('.leaflet-marker-icon:not(:first-of-type)')
-    markers.forEach((marker) => {marker.remove()})
-    cb()
-  })
-}
-
-
-let setFeatures = (cb) => {
-  featuresCheckList.addEventListener('click', () => {
-    let markers = document.querySelectorAll('.leaflet-marker-icon:not(:first-of-type)')
-    markers.forEach((marker) => {marker.remove()})
-    cb()
-  })
-}
-
-let filterTypes = (item) => {
-  let type = typeInput.value;
-  let same = false;
-
-  if (item.offer.type === type) {
-    same = true
-  }
-
-  if (type === 'any') {
-    same = true;
-  }
-
-  return same
-}
-
-let filterPrice = (item) => {
-  let priceLevel = priceInput.value;
-  let same = false;
-
-  if (priceLevel === 'low' && item.offer.price < 10000) {
-    same = true;
-  }
-
-  if (priceLevel === 'middle' && item.offer.price > 10000 && item.offer.price < 50000) {
-    same = true;
-  }
-
-  if (priceLevel === 'high' && item.offer.price > 50000) {
-    same = true;
-  }
-
-  if (priceLevel === 'any') {
-    same = true;
-  }
-
-  return same
-}
-
-let filterRooms = (item) => {
-  let roomsNumber = roomsInput.value;
-  let same = false;
-
-  if (item.offer.rooms >= roomsNumber) {
-    same = true;
-  }
-
-  if (roomsNumber === 'any') {
-    same = true;
-  }
-
-  return same
-}
-
-let filterGuest = (item) => {
-  let guestNumber = guestInput.value;
-  let same = false;
-
-  if (item.offer.guests >= guestNumber) {
-    same = true;
-  }
-
-  if (guestNumber === 'any') {
-    same = true;
-  }
-
-  return same
-}
 
 let addOffersToMap = (array) => {
 
@@ -225,31 +115,8 @@ let addOffersToMap = (array) => {
     .filter(filterPrice)
     .filter(filterRooms)
     .filter(filterGuest)
-    .filter((item) => {
-      let features = featuresCheckList.querySelectorAll('input');
-      let offerFeatures = item.offer.features;
-
-      for (let i = 0; i < features.length; i++) {
-        if (features[i].checked) {
-          if (offerFeatures.some((element) => {return element === features[i].value})) {
-            return true;
-          }
-        }
-      }
-
-
-      // Может быть собрать новый массив только с инпутами у которых есть checked?
-
-      // let checkedFeatures = [];
-      //
-      // for (let i = 0; i < features.length; i++) {
-      //   if (features[i].checked) {
-      //     checkedFeatures[i] = features[i].value;
-      //   }
-      // }
-    })
-
-
+    .filter(filterFeatures)
+  
   newArray
     .slice(0, 10)
     .forEach((profile) => {
@@ -271,33 +138,9 @@ let addOffersToMap = (array) => {
 
 getData((profiles) => {
   addOffersToMap(profiles)
-  setTypes(() => {addOffersToMap(profiles)})
-  setPrice(() => {addOffersToMap(profiles)});
-  setRooms(() => {addOffersToMap(profiles)});
-  setGuest(() => {addOffersToMap(profiles)});
-  setFeatures(() => {addOffersToMap(profiles)});
+  setListener(() => {addOffersToMap(profiles)}, typeInput)
+  setListener(() => {addOffersToMap(profiles)}, priceInput);
+  setListener(() => {addOffersToMap(profiles)}, roomsInput);
+  setListener(() => {addOffersToMap(profiles)}, guestInput);
+  setListener(() => {addOffersToMap(profiles)}, featuresCheckList);
 });
-
-export{addOffersToMap}
-
-// getData()
-//   .then((profiles) => {
-//     let cutProfiles = profiles.slice(0, 10)
-//     console.log(cutProfiles)
-//
-//     cutProfiles.forEach((profile) => {
-//       let lat = profile.location.lat;
-//       let lng = profile.location.lng;
-//       // eslint-disable-next-line no-undef
-//       let profileMarker = L.marker({
-//         lat,
-//         lng,
-//       },
-//       {
-//         icon: profileIcon,
-//       },
-//       )
-//
-//       profileMarker.addTo(map).bindPopup(generateOffer(profile))
-//     })
-//   })
