@@ -11,7 +11,7 @@ const markerWidth = 60;
 const markerHeight = 60;
 const tokyoLat = 35.683377;
 const tokyoLng = 139.754519;
-const mapScale = 12;
+const mapScale = 9;
 
 // Значения для валидации длины заголовка
 const MIN_TITLE_LENGTH = 30;
@@ -34,6 +34,14 @@ let times = ['12:00', '13:00', '14:00'];
 let featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 let photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 const roomsAndCapaTokyoMap = {'bungalow': 0, 'flat': 1000, 'house': 5000, 'palace': 10000 };
+
+// Константы для фильтрации объявлений
+const MAX_FILTER_PRICE = 50000;
+const MIN_FILTER_PRICE = 10000;
+const LOW_PRICE_LEVEL = 'low';
+const MIDDLE_PRICE_LEVEL = 'middle';
+const HIGH_PRICE_LEVEL = 'high';
+const DEFAULT_FILTER_VALUE = 'any';
 
 export {
   MIN_COORDINATE_X,
@@ -63,5 +71,11 @@ export {
   NOT_FOR_GUEST,
   FOR_ONE_GUEST,
   FOR_TWO_GUEST,
-  FOR_THREE_GUEST
+  FOR_THREE_GUEST,
+  MAX_FILTER_PRICE,
+  MIN_FILTER_PRICE,
+  LOW_PRICE_LEVEL,
+  MIDDLE_PRICE_LEVEL,
+  HIGH_PRICE_LEVEL,
+  DEFAULT_FILTER_VALUE
 }

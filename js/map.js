@@ -1,7 +1,7 @@
 import {markerWidth, markerHeight, tokyoLat, tokyoLng, mapScale} from './constants-data.js'
 import {generateOffer} from './generate-offer.js';
+import {filterTypes, filterPrice, filterRooms, filterGuest, filterFeatures, setListener} from './filters.js'
 import {getData} from './data.js';
-
 
 let adForm = document.querySelector('.ad-form');
 let adFieldsets = adForm.querySelectorAll('fieldset');
@@ -101,9 +101,25 @@ let profileIcon = L.icon({
   iconAnchor: [markerWidth/2 , markerHeight],
 });
 
-getData()
-  .then((profiles) => {
-    profiles.forEach((profile) => {
+let typeInput = document.querySelector('#housing-type');
+let priceInput = document.querySelector('#housing-price');
+let roomsInput = document.querySelector('#housing-rooms');
+let guestInput = document.querySelector('#housing-guests');
+let featuresCheckList = document.querySelector('#housing-features');
+
+let addOffersToMap = (array) => {
+
+  let newArray = array
+    .slice()
+    .filter(filterTypes)
+    .filter(filterPrice)
+    .filter(filterRooms)
+    .filter(filterGuest)
+    .filter(filterFeatures)
+  
+  newArray
+    .slice(0, 10)
+    .forEach((profile) => {
       let lat = profile.location.lat;
       let lng = profile.location.lng;
       // eslint-disable-next-line no-undef
@@ -118,4 +134,13 @@ getData()
 
       profileMarker.addTo(map).bindPopup(generateOffer(profile))
     })
-  })
+}
+
+getData((profiles) => {
+  addOffersToMap(profiles)
+  setListener(() => {addOffersToMap(profiles)}, typeInput)
+  setListener(() => {addOffersToMap(profiles)}, priceInput);
+  setListener(() => {addOffersToMap(profiles)}, roomsInput);
+  setListener(() => {addOffersToMap(profiles)}, guestInput);
+  setListener(() => {addOffersToMap(profiles)}, featuresCheckList);
+});

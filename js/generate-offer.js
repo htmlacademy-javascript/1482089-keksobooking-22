@@ -44,10 +44,16 @@ let generateOffer = (profile) => {
   offerTimes.textContent = 'Заезд после ' + profile.offer.checkin + ' выезд до ' + profile.offer.checkout; // Время заезда и выезда
 
   for (let i = featuresItems.length - 1; i >= 0; i--) {
-    let featureName = profile.offer.features[i];
-    let className = 'popup__feature--' + featureName;
-    if (!featuresItems[i].classList.contains(className)) {featuresItems[i].remove()}
+    featuresItems[i].remove()
   }
+
+  profile.offer.features.forEach((item) => {
+    let newItem = document.createElement('li');
+    newItem.classList.add('popup__feature');
+    let className = `popup__feature--${item}`;
+    newItem.classList.add(className);
+    featuresList.appendChild(newItem);
+  })
 
   offerDescription.textContent = profile.offer.description;
 
