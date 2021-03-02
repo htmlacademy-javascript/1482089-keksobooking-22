@@ -229,24 +229,27 @@ let addOffersToMap = (array) => {
       let features = featuresCheckList.querySelectorAll('input');
       let offerFeatures = item.offer.features;
 
+
+      // Может быть собрать новый массив только с инпутами у которых есть checked?
+
+      let checkedFeatures = [];
+
       for (let i = 0; i < features.length; i++) {
         if (features[i].checked) {
-          if (offerFeatures.some((element) => {return element === features[i].value})) {
+          checkedFeatures.push(features[i].value);
+        }
+      }
+
+      for (let j = 0; j < offerFeatures.length; j++) {
+        let cache = offerFeatures[j];
+
+        for (let k = 0; k < checkedFeatures.length; k++) {
+          if (cache === checkedFeatures[j]) {
             return true;
           }
         }
       }
-
-
-      // Может быть собрать новый массив только с инпутами у которых есть checked?
-
-      // let checkedFeatures = [];
-      //
-      // for (let i = 0; i < features.length; i++) {
-      //   if (features[i].checked) {
-      //     checkedFeatures[i] = features[i].value;
-      //   }
-      // }
+      return false
     })
 
 
@@ -270,6 +273,7 @@ let addOffersToMap = (array) => {
 }
 
 getData((profiles) => {
+  console.log(profiles)
   addOffersToMap(profiles)
   setTypes(() => {addOffersToMap(profiles)})
   setPrice(() => {addOffersToMap(profiles)});
