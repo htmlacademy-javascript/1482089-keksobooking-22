@@ -1,3 +1,4 @@
+/* global _:readonly */
 import {markerWidth, markerHeight, tokyoLat, tokyoLng, mapScale} from './constants-data.js'
 import {generateOffer} from './generate-offer.js';
 import {filterTypes, filterPrice, filterRooms, filterGuest, filterFeatures, setListener} from './filters.js'
@@ -116,7 +117,7 @@ let addOffersToMap = (array) => {
     .filter(filterRooms)
     .filter(filterGuest)
     .filter(filterFeatures)
-  
+
   newArray
     .slice(0, 10)
     .forEach((profile) => {
@@ -138,9 +139,9 @@ let addOffersToMap = (array) => {
 
 getData((profiles) => {
   addOffersToMap(profiles)
-  setListener(() => {addOffersToMap(profiles)}, typeInput)
-  setListener(() => {addOffersToMap(profiles)}, priceInput);
-  setListener(() => {addOffersToMap(profiles)}, roomsInput);
-  setListener(() => {addOffersToMap(profiles)}, guestInput);
-  setListener(() => {addOffersToMap(profiles)}, featuresCheckList);
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), typeInput)
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), priceInput);
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), roomsInput);
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), guestInput);
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), featuresCheckList);
 });
