@@ -1,5 +1,6 @@
 import {marker} from './map.js';
-import {tokyoLat, tokyoLng} from './constants-data.js';
+import {TOKYO_LAT, TOKYO_LNG} from './constants-data.js';
+import {cleanPhotos} from './upload-images.js';
 
 let generateNumber = function (min, max, point) {
   if (max < 0 || min < 0 || point < 0 || max < min) {
@@ -85,12 +86,13 @@ let clearForm = () => {
   let address = form.querySelector('#address');
   form.reset();
   filters.reset();
-  address.value = `${tokyoLat}, ${tokyoLng}`;
-  marker.setLatLng([tokyoLat, tokyoLng]);
+  address.value = `${TOKYO_LAT}, ${TOKYO_LNG}`;
+  marker.setLatLng([TOKYO_LAT, TOKYO_LNG]);
 }
 
 let onSuccess = () => {
   clearForm();
+  cleanPhotos();
   let newSuccessPopup = clonePopup('#success', '.success');
   closePopups(newSuccessPopup);
 }

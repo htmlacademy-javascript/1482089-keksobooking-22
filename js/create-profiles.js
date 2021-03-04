@@ -6,11 +6,11 @@ import {
   MIN_COORDINATE_Y,
   MAX_COORDINATE_Y,
   NUMBERS_AFTER_POINT,
-  photosLinks,
-  houseTypes,
-  times,
-  featuresArr,
-  photosArr,
+  PHOTOS_LINKS,
+  HOUSE_TYPES,
+  TIMES,
+  FEATURES_ARR,
+  PHOTOS_ARR,
   NUMBER_PROFILES
 } from './constants-data.js';
 
@@ -28,7 +28,7 @@ let createProfile = () => {
 
   return {
     author: {
-      avatar: 'img/avatars/user' + '0' + getRandomElementNoRepeat(photosLinks) + '.png', //строка — адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} — это число от 1 до 8 с ведущим нулём. Например, 01, 02 и т. д. Адреса изображений не повторяются.
+      avatar: 'img/avatars/user' + '0' + getRandomElementNoRepeat(PHOTOS_LINKS) + '.png', //строка — адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} — это число от 1 до 8 с ведущим нулём. Например, 01, 02 и т. д. Адреса изображений не повторяются.
     },
 
     offer: {
@@ -38,21 +38,21 @@ let createProfile = () => {
 
       price: generateNumber(1000, 5000), //число — стоимость. Любое положительное число.
 
-      type: getRandomElement(houseTypes), //строка — одно из четырёх фиксированных значений: palace, flat, house или bungalow.
+      type: getRandomElement(HOUSE_TYPES), //строка — одно из четырёх фиксированных значений: palace, flat, house или bungalow.
 
       rooms: generateNumber(1, 10), //число — количество комнат. Любое положительное число.
 
       guests:  generateNumber(1, 10), //число — количество гостей, которое можно разместить. Любое положительное число.
 
-      checkin: getRandomElement(times), //строка — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00.
+      checkin: getRandomElement(TIMES), //строка — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00.
 
-      checkout: getRandomElement(times), //строка — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00.
+      checkout: getRandomElement(TIMES), //строка — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00.
 
-      features:  getNoRepeatList(featuresArr), //массив строк — массив случайной длины из значений: wifi, dishwasher, parking, washer, elevator, conditioner. Значения не должны повторяться.
+      features:  getNoRepeatList(FEATURES_ARR), //массив строк — массив случайной длины из значений: wifi, dishwasher, parking, washer, elevator, conditioner. Значения не должны повторяться.
 
       description: 'Лучшее место для отдыха и работы', //строка — описание помещения. Придумайте самостоятельно.
 
-      photos: getNoRepeatList(photosArr), //массив строк — массив случайной длины из значений: http://o0.github.io/assets/images/tokyo/hotel1.jpg, http://o0.github.io/assets/images/tokyo/hotel2.jpg, http://o0.github.io/assets/images/tokyo/hotel3.jpg.
+      photos: getNoRepeatList(PHOTOS_ARR), //массив строк — массив случайной длины из значений: http://o0.github.io/assets/images/tokyo/hotel1.jpg, http://o0.github.io/assets/images/tokyo/hotel2.jpg, http://o0.github.io/assets/images/tokyo/hotel3.jpg.
     },
 
     location: {

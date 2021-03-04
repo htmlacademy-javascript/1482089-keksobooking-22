@@ -1,6 +1,6 @@
 import {
-  times,
-  roomsAndCapaTokyoMap,
+  TIMES,
+  ROOMS_AND_CAPA_TOKYO_MAP,
   MIN_TITLE_LENGTH,
   MAX_PRICE,
   ONE_ROOM,
@@ -13,8 +13,8 @@ import {
   FOR_THREE_GUEST
 } from './constants-data.js'
 
-let typesOffer = Object.keys(roomsAndCapaTokyoMap);
-let minPricesOfTypesOffer = Object.values(roomsAndCapaTokyoMap);
+let typesOffer = Object.keys(ROOMS_AND_CAPA_TOKYO_MAP);
+let minPricesOfTypesOffer = Object.values(ROOMS_AND_CAPA_TOKYO_MAP);
 
 let form = document.querySelector('.ad-form');
 let inputTypeOffer = form.querySelector('#type');
@@ -67,14 +67,14 @@ let inputTimeIn = form.querySelector('#timein');
 let inputTimeOut = form.querySelector('#timeout');
 
 inputTimeIn.addEventListener('change', () => {
-  for (let i = 0; i < times.length; i++) {
-    if (inputTimeIn.value === times[i]) {inputTimeOut.value = times[i]}
+  for (let i = 0; i < TIMES.length; i++) {
+    if (inputTimeIn.value === TIMES[i]) {inputTimeOut.value = TIMES[i]}
   }
 })
 
 inputTimeOut.addEventListener('change', () => {
-  for (let i = 0; i < times.length; i++) {
-    if (inputTimeOut.value === times[i]) {inputTimeIn.value = times[i]}
+  for (let i = 0; i < TIMES.length; i++) {
+    if (inputTimeOut.value === TIMES[i]) {inputTimeIn.value = TIMES[i]}
   }
 })
 
