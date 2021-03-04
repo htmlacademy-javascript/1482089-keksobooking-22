@@ -1,5 +1,6 @@
 /* global _:readonly */
-import {markerWidth, markerHeight, tokyoLat, tokyoLng, mapScale} from './constants-data.js'
+/* global L:readonly */
+import {MARKER_WIDTH, MARKER_HEIGHT, TOKYO_LAT, TOKYO_LNG, MAP_SCALE, RERENDER_DELAY} from './constants-data.js'
 import {generateOffer} from './generate-offer.js';
 import {filterTypes, filterPrice, filterRooms, filterGuest, filterFeatures, setListener} from './filters.js'
 import {getData} from './data.js';
@@ -41,36 +42,33 @@ let deactivateForm = (isDeactivate) => {
 
 deactivateForm(true)
 
-// eslint-disable-next-line no-undef
 let map = L.map(mapContainer)
   .on('load', () => {
     deactivateForm(false)
   })
   .setView(
     {
-      lat:  tokyoLat,
-      lng: tokyoLng,
-    }, mapScale);
+      lat:  TOKYO_LAT,
+      lng: TOKYO_LNG,
+    }, MAP_SCALE);
 
-// eslint-disable-next-line no-undef
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
-// eslint-disable-next-line no-undef
+
 let myIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
-  iconSize: [markerWidth, markerHeight],
-  iconAnchor: [markerWidth/2 , markerHeight],
+  iconSize: [MARKER_WIDTH, MARKER_HEIGHT],
+  iconAnchor: [MARKER_WIDTH/2 , MARKER_HEIGHT],
 });
 
-// eslint-disable-next-line no-undef
 let marker = L.marker(
   {
-    lat:  tokyoLat,
-    lng: tokyoLng,
+    lat:  TOKYO_LAT,
+    lng: TOKYO_LNG,
   },
   {
     icon: myIcon,
@@ -95,11 +93,10 @@ marker.on('move', (evt) => {
   addressInput.value = `${newCoordinateLat}, ${newCoordinateLng}`;
 })
 
-// eslint-disable-next-line no-undef
 let profileIcon = L.icon({
   iconUrl: 'img/pin.svg',
-  iconSize: [markerWidth, markerHeight],
-  iconAnchor: [markerWidth/2 , markerHeight],
+  iconSize: [MARKER_WIDTH, MARKER_HEIGHT],
+  iconAnchor: [MARKER_WIDTH/2 , MARKER_HEIGHT],
 });
 
 let typeInput = document.querySelector('#housing-type');
@@ -123,7 +120,6 @@ let addOffersToMap = (array) => {
     .forEach((profile) => {
       let lat = profile.location.lat;
       let lng = profile.location.lng;
-      // eslint-disable-next-line no-undef
       let profileMarker = L.marker({
         lat,
         lng,
@@ -139,9 +135,9 @@ let addOffersToMap = (array) => {
 
 getData((profiles) => {
   addOffersToMap(profiles)
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), typeInput)
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), priceInput);
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), roomsInput);
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), guestInput);
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, 500), featuresCheckList);
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), typeInput)
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), priceInput);
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), roomsInput);
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), guestInput);
+  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), featuresCheckList);
 });

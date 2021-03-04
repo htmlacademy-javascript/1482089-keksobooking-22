@@ -1,4 +1,4 @@
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+import {FILE_TYPES} from './constants-data.js';
 
 let avatarInput = document.querySelector('#avatar');
 let avatarContainer = document.querySelector('.ad-form-header__preview:first-child')
@@ -60,14 +60,19 @@ offerImagesInput.addEventListener('change', () => {
 })
 
 
-// Чистим полк при нажатии кнопки reset
+// Чистим фото при нажатии кнопки reset
 let cleanButton = document.querySelector('.ad-form__reset');
-cleanButton.addEventListener('click', () => {
+
+let cleanPhotos = () => {
   let containers = document.querySelectorAll('.ad-form__photo');
-  containers.forEach((item) => {item.remove()})
+  containers.forEach((item) => {item.remove()});
 
 
   fieldset.appendChild(offerImagesContainer);
 
   avatar.src = 'img/muffin-grey.svg';
-})
+};
+
+cleanButton.addEventListener('click', cleanPhotos);
+
+export {cleanPhotos};
