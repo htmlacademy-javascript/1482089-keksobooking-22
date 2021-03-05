@@ -11,7 +11,9 @@ import {
   FOR_ONE_GUEST,
   FOR_TWO_GUEST,
   FOR_THREE_GUEST
-} from './constants-data.js'
+} from './constants-data.js';
+import {getData} from './data.js';
+import {addOffersToMap} from './map.js';
 
 let typesOffer = Object.keys(ROOMS_AND_CAPA_TOKYO_MAP);
 let minPricesOfTypesOffer = Object.values(ROOMS_AND_CAPA_TOKYO_MAP);
@@ -141,4 +143,8 @@ let resetButton = form.querySelector('.ad-form__reset');
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   clearForm();
+
+  getData((profiles) => {
+    addOffersToMap(profiles);
+  })
 })
