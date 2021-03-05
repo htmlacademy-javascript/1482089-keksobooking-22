@@ -133,6 +133,8 @@ let addOffersToMap = (array) => {
     })
 }
 
+export {addOffersToMap}
+
 getData((profiles) => {
   addOffersToMap(profiles)
   setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), typeInput)
