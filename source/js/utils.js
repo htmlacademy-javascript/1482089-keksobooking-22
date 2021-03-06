@@ -2,7 +2,7 @@ import {marker} from './map.js';
 import {TOKYO_LAT, TOKYO_LNG, ERROR_DELAY, ESCAPE_BUTTON} from './constants-data.js';
 import {cleanPhotos} from './upload-images.js';
 
-function openErrorDataPopup () {
+let openErrorDataPopup = () => {
   let errorPopup = document.createElement('div');
   errorPopup.style.height = '50px';
   errorPopup.style.textAlign = 'center';
