@@ -1,9 +1,7 @@
-/* global _:readonly */
 /* global L:readonly */
-import {MARKER_WIDTH, MARKER_HEIGHT, TOKYO_LAT, TOKYO_LNG, MAP_SCALE, RERENDER_DELAY} from './constants-data.js'
+import {MARKER_WIDTH, MARKER_HEIGHT, TOKYO_LAT, TOKYO_LNG, MAP_SCALE} from './constants-data.js'
 import {generateOffer} from './generate-offer.js';
-import {filterTypes, filterPrice, filterRooms, filterGuest, filterFeatures, setListener} from './filters.js'
-import {getData} from './data.js';
+import {filterTypes, filterPrice, filterRooms, filterGuest, filterFeatures} from './filters.js'
 
 let adForm = document.querySelector('.ad-form');
 let adFieldsets = adForm.querySelectorAll('fieldset');
@@ -133,13 +131,5 @@ let addOffersToMap = (array) => {
     })
 }
 
-export {addOffersToMap}
+export {addOffersToMap, typeInput, priceInput, roomsInput, guestInput, featuresCheckList}
 
-getData((profiles) => {
-  addOffersToMap(profiles)
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), typeInput)
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), priceInput);
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), roomsInput);
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), guestInput);
-  setListener(_.debounce(() => {addOffersToMap(profiles)}, RERENDER_DELAY), featuresCheckList);
-});
