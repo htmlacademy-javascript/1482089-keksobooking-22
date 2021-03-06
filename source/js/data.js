@@ -8,12 +8,12 @@ function getData (onSuccess) {
     .catch(openErrorDataPopup)
 }
 
-let postData = (fromData) => {
+let postData = (formData) => {
 
   return fetch('https://22.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
-      body: fromData,
+      body: formData,
     },
   )
 }
