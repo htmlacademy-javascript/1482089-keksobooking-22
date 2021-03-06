@@ -20,7 +20,7 @@ let setListener = (cb, listenerTarget) => {
   })
 }
 
-let filterTypes = function (item) {
+let filterTypes =  (item) => {
   return typeInput.value === item.offer.type || typeInput.value === DEFAULT_FILTER_VALUE;
 }
 
@@ -50,7 +50,7 @@ let filterFeatures = (item) => {
   let features = featuresCheckList.querySelectorAll('input:checked');
   let offerFeatures = item.offer.features;
 
-  return offerFeatures.every.call(features, function (it) {
+  return offerFeatures.every.call(features,  (it) => {
 
     return item.offer.features.indexOf(it.value) !== -1;
 
